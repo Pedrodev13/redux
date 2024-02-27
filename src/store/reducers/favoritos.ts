@@ -2,11 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Produto } from '../../App'
 
 type FavoritosState = {
-  itens: Produto[]
+  favoritos: Produto[]
 }
 
 const initialState: FavoritosState = {
-  itens: []
+  favoritos: []
 }
 
 const favoritosSlice = createSlice({
@@ -14,12 +14,12 @@ const favoritosSlice = createSlice({
   initialState,
   reducers: {
     adicionarFav: (state, action: PayloadAction<Produto>) => {
-      const p = action.payload
-
-      if (state.itens.find((produto) => produto.id === p.id)) {
-        alert('Item já adicionado')
+      const produto = action.payload
+      if (state.favoritos.find((p) => p.id === produto.id)) {
+        const favoritosSem = state.favoritos.filter((p) => p.id !== produto.id)
+        state.favoritos = favoritosSem
       } else {
-        state.itens.push(p)
+        state.favoritos = [...state.favoritos, produto]
       }
     }
   }
